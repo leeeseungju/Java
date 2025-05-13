@@ -1,4 +1,4 @@
-package midTerm;
+package weather;
 
 // 날씨 정보를 저장하기 위한 추상 클래스, 날짜, 온도, 상태를 공통으로 가지는 부모 클래스
 public abstract class WeatherData { 

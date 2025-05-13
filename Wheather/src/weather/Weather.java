@@ -1,4 +1,4 @@
-package midTerm;
+package weather;
 
 // 추상화된 WeatherData 클래스 상속받아 특정 날짜의 날씨 정보를 담는 클래스
 public class Weather extends WeatherData { 

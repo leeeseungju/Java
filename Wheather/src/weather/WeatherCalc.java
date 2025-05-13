@@ -1,4 +1,4 @@
-package midTerm;
+package weather;
 
 import java.util.ArrayList;
 import java.util.List;

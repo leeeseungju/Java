@@ -50,10 +50,6 @@ private void close() {
 
 	public void createTable() {
 		this.open();
-		if (this.connection == null) {
-        System.out.println("❗ DB 연결 실패로 INSERT 중단");
-        return;
-    	}
 		String query = "CREATE TABLE user (\r\n" + "    idx INT AUTO_INCREMENT PRIMARY KEY,\r\n"
 				+ "    user_type VARCHAR(20),\r\n" + "    id VARCHAR(50),\r\n" + "    pwd VARCHAR(255),\r\n"
 				+ "    name VARCHAR(100),\r\n" + "    phone VARCHAR(20),\r\n" + "    address VARCHAR(255),\r\n"
@@ -92,7 +88,7 @@ private void close() {
 		if (this.connection == null) {
         System.out.println("❗ DB 연결 실패로 INSERT 중단");
         return;
-    	}
+    }
 		String query = "INSERT INTO user (user_type, id, pwd, name, phone, address, created, last_updated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			PreparedStatement statement = this.connection.prepareStatement(query);
@@ -115,39 +111,42 @@ private void close() {
 	}
 
 	public ArrayList<User> selectAll() {
-		this.open();
-		ArrayList<User> data = new ArrayList<>();
-		this.open();
-		if (this.connection == null) {
-			System.out.println("❗ DB 연결 실패로 작업 중단");
-			return ...; // 적절한 기본값 또는 null 리턴
-		}
-		try {
-			String query = "SELECT * FROM user";
-			PreparedStatement statement = this.connection.prepareStatement(query);
-			ResultSet result = statement.executeQuery();
-			while (result.next()) {
-				int idx = result.getInt("idx");
-				String userType = result.getString("user_type");
-				String id = result.getString("id");
-				String pwd = result.getString("pwd");
-				String name = result.getString("name");
-				String phone = result.getString("phone");
-				String address = result.getString("address");
-				String created = result.getString("created");
-				String lastUpdated = result.getString("last_updated");
-				data.add(new User(idx, userType, id, pwd, name, phone, address, created, lastUpdated));
-			}
-			statement.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.close();
-		return data;
+    this.open();
+    if (this.connection == null) {
+        System.out.println("❗ DB 연결 실패로 SELECT 중단");
+        return new ArrayList<>();
+    }
+    ArrayList<User> data = new ArrayList<>();
+    try {
+        String query = "SELECT * FROM user";
+        PreparedStatement statement = this.connection.prepareStatement(query);
+        ResultSet result = statement.executeQuery();
+        while (result.next()) {
+            int idx = result.getInt("idx");
+            String userType = result.getString("user_type");
+            String id = result.getString("id");
+            String pwd = result.getString("pwd");
+            String name = result.getString("name");
+            String phone = result.getString("phone");
+            String address = result.getString("address");
+            String created = result.getString("created");
+            String lastUpdated = result.getString("last_updated");
+            data.add(new User(idx, userType, id, pwd, name, phone, address, created, lastUpdated));
+        }
+        statement.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    this.close();
+    return data;
 	}
 
 	public User login(User user) {
 		this.open();
+		if (this.connection == null) {
+			System.out.println("❗ DB 연결 실패로 LOGIN 중단");
+			return null;
+		}
 		User returnData = new User();
 		try {
 			String query = "SELECT * FROM user WHERE id=? AND pwd=?";
@@ -177,48 +176,56 @@ private void close() {
 	}
 	
 	public void updateUser(User user) {
-		this.open();
-		String query = "UPDATE user SET name=?, phone=?, address=?, last_updated=NOW() WHERE id=?";
-		try {
-			PreparedStatement statement = this.connection.prepareStatement(query);
-			statement.setString(1, user.name);
-			statement.setString(2, user.phone);
-			statement.setString(3, user.address);
-			statement.setString(4, user.id); // 로그인한 유저 ID 기준으로 수정
-			statement.executeUpdate();
-			statement.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.close();
+    this.open();
+    if (this.connection == null) {
+        System.out.println("❗ DB 연결 실패로 UPDATE 중단");
+        return;
+    }
+    String query = "UPDATE user SET name=?, phone=?, address=?, last_updated=NOW() WHERE id=?";
+    try {
+        PreparedStatement statement = this.connection.prepareStatement(query);
+        statement.setString(1, user.name);
+        statement.setString(2, user.phone);
+        statement.setString(3, user.address);
+        statement.setString(4, user.id);
+        statement.executeUpdate();
+        statement.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    this.close();
 	}
 
 	public User selectUserById(String id) {
-		this.open();
-		User returnData = new User();
-		try {
-			String query = "SELECT * FROM user WHERE id=?";
-			PreparedStatement statement = this.connection.prepareStatement(query);
-			statement.setString(1, id);
-			ResultSet result = statement.executeQuery();
-			if (result.next()) {
-				int idx = result.getInt("idx");
-				String userType = result.getString("user_type");
-				String userId = result.getString("id");
-				String pwd = result.getString("pwd");
-				String name = result.getString("name");
-				String phone = result.getString("phone");
-				String address = result.getString("address");
-				String created = result.getString("created");
-				String lastUpdated = result.getString("last_updated");
-				returnData = new User(idx, userType, userId, pwd, name, phone, address, created, lastUpdated);
-			}
-			statement.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.close();
-		return returnData;
+    this.open();
+    if (this.connection == null) {
+        System.out.println("❗ DB 연결 실패로 SELECT 중단");
+        return null;
+    }
+    User returnData = new User();
+    try {
+        String query = "SELECT * FROM user WHERE id=?";
+        PreparedStatement statement = this.connection.prepareStatement(query);
+        statement.setString(1, id);
+        ResultSet result = statement.executeQuery();
+        if (result.next()) {
+            int idx = result.getInt("idx");
+            String userType = result.getString("user_type");
+            String userId = result.getString("id");
+            String pwd = result.getString("pwd");
+            String name = result.getString("name");
+            String phone = result.getString("phone");
+            String address = result.getString("address");
+            String created = result.getString("created");
+            String lastUpdated = result.getString("last_updated");
+            returnData = new User(idx, userType, userId, pwd, name, phone, address, created, lastUpdated);
+        }
+        statement.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    this.close();
+    return returnData;
 	}
 
 }

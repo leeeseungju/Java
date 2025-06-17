@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트</title>
+    <link rel="stylesheet" th:href="@{/index.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>메인화면</h1>
+
+            <div class="user-info" th:if="${isLogin}">
+				<div class="user-row">
+				<p class="welcome-msg">
+				  안녕하세요, 
+				  <strong th:text="${user.name}" style="color:#0066cc;">홍길동</strong>
+				  (<span th:text="${user.id}">hong</span>)님!
+				</p>
+
+                <a th:href="@{/logout}" class="logout-btn">로그아웃</a>
+            </div>
+        </div>
+
+        <div class="nav-grid">
+
+            <!-- 회원 가입 -->
+            <a th:if="${!isLogin}" th:href="@{/join}" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon join-icon"></span>
+                    <div class="nav-title">회원 가입</div>
+                </div>
+            </a>
+            <a th:if="${isLogin}" href="javascript:void(0)" onclick="showAlreadyLoginAlert()" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon join-icon"></span>
+                    <div class="nav-title">회원 가입</div>
+                </div>
+            </a>
+
+            <!-- 로그인 -->
+            <a th:if="${!isLogin}" th:href="@{/login}" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon login-icon"></span>
+                    <div class="nav-title">로그인</div>
+                </div>
+            </a>
+            <a th:if="${isLogin}" href="javascript:void(0)" onclick="showAlreadyLoginAlert()" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon login-icon"></span>
+                    <div class="nav-title">로그인</div>
+                </div>
+            </a>
+
+            <!-- 회원 리스트 (관리자만) -->
+            <a th:if="${isLogin and user.userType == 'admin'}" th:href="@{/user_list}" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon list-icon"></span>
+                    <div class="nav-title">회원 리스트</div>
+                </div>
+            </a>
+            <a th:if="${isLogin and user.userType != 'admin'}" href="javascript:void(0)" onclick="showAdminAlert()" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon list-icon"></span>
+                    <div class="nav-title">회원 리스트</div>
+                </div>
+            </a>
+            <a th:if="${!isLogin}" href="javascript:void(0)" onclick="showLoginAlert()" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon list-icon"></span>
+                    <div class="nav-title">회원 리스트</div>
+                </div>
+            </a>
+
+            <!-- 마이페이지 (모두 접근 가능) -->
+            <a th:href="@{/mypage}" class="nav-item">
+                <div class="nav-content">
+                    <span class="nav-icon mypage-icon"></span>
+                    <div class="nav-title">마이 페이지</div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function showAdminAlert() {
+            alert("관리자만 접근할 수 있는 페이지입니다.");
+        }
+
+        function showLoginAlert() {
+            alert("로그인이 필요합니다.");
+        }
+
+        function showAlreadyLoginAlert() {
+            alert("이미 로그인된 상태입니다.");
+        }
+    </script>
+</body>
+</html>

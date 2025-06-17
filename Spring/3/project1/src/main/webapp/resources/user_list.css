@@ -1,0 +1,191 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	background: #e6f3ff;
+	min-height: 100vh;
+	padding: 40px 20px;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	background: white;
+	border-radius: 15px;
+	border: 2px solid #333;
+	box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.header {
+	background: #333;
+	color: white;
+	padding: 30px;
+	text-align: center;
+	border-radius: 13px 13px 0 0;
+}
+
+.header h2 {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.header p {
+	opacity: 0.9;
+	font-size: 16px;
+}
+
+.table-container {
+	padding: 30px;
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	background: white;
+	border: 2px solid #333;
+	border-radius: 10px;
+	overflow: hidden;
+}
+
+th {
+	background: #333;
+	color: white;
+	padding: 15px 12px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+td {
+	padding: 15px 12px;
+	text-align: center;
+	border: 1px solid #ccc;
+	font-size: 14px;
+	color: #333;
+	background: #fff;
+}
+
+tr:hover {
+	background-color: #f8f8f8;
+}
+
+.user-id {
+	font-weight: bold;
+	color: #333;
+}
+
+.user-name {
+	font-weight: bold;
+	color: #333;
+}
+
+.user-phone {
+	color: #333;
+}
+
+.user-address {
+	max-width: 200px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.user-date {
+	color: #666;
+	font-size: 13px;
+}
+
+.actions {
+	text-align: center;
+	padding: 30px;
+	background: #f8f8f8;
+	border-radius: 0 0 13px 13px;
+}
+
+.btn {
+	display: inline-block;
+	padding: 12px 24px;
+	background: #333;
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+	margin: 0 10px;
+	border-radius: 8px;
+}
+
+.btn:hover {
+	background: #555;
+}
+
+.btn-secondary {
+	background: #666;
+}
+
+.btn-secondary:hover {
+	background: #888;
+}
+
+.stats {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	margin-bottom: 20px;
+	flex-wrap: wrap;
+}
+
+.stat-item {
+	background: white;
+	padding: 20px;
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	text-align: center;
+	min-width: 120px;
+}
+
+.stat-number {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+	display: block;
+}
+
+.stat-label {
+	font-size: 12px;
+	color: #666;
+	margin-top: 5px;
+}
+
+@media ( max-width : 768px) {
+	.container {
+		margin: 0 10px;
+	}
+	.header {
+		padding: 20px;
+	}
+	.header h2 {
+		font-size: 24px;
+	}
+	.table-container {
+		padding: 20px 10px;
+	}
+	th, td {
+		padding: 10px 8px;
+		font-size: 13px;
+	}
+	.user-address {
+		max-width: 100px;
+	}
+	.stats {
+		gap: 15px;
+	}
+	.stat-item {
+		min-width: 100px;
+		padding: 15px;
+	}
+}

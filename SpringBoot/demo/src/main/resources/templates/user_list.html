@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 목록</title>
+    <link rel="stylesheet" th:href="@{/user_list.css}" />
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>회원 목록</h2>
+            <p>관리자 전용 - 전체 회원 정보를 확인할 수 있습니다</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number" th:text="${#lists.size(userList)}">0</span>
+                <span class="stat-label">전체 회원</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>연락처</th>
+                        <th>주소</th>
+                        <th>가입일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user, status : ${userList}">
+                        <td th:text="${status.index + 1}">1</td>
+                        <td th:text="${user.id}" class="user-id">hong</td>
+                        <td th:text="${user.name}" class="user-name">홍길동</td>
+                        <td th:text="${user.phone}" class="user-phone">010-0000-0000</td>
+                        <td th:text="${user.address}" class="user-address" th:title="${user.address}">서울시</td>
+                        <td th:text="${user.created}" class="user-date">2024-01-01</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="actions">
+            <a href="/" class="btn">메인으로</a>
+        </div>
+    </div>
+</body>
+</html>

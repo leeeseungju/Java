@@ -1,0 +1,163 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap 5 Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap 5 CSS & JS -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javaScript" language="javascript" defer="defer">
+
+	$(document).ready(function(){
+		<c:if test="${not empty sessionScope.msg}">
+			alert("${sessionScope.msg}");
+			$.post("${pageContext.request.contextPath}/removeMessage.do");
+		</c:if>
+	})
+
+	function add() {
+		location.href = "<c:url value='/mgmt.do'/>";
+	}
+
+	function view(idx) {
+		location.href = "<c:url value='/view.do'/>?idx="+idx;
+	}
+
+	function check() {
+		if ($("#user_id").val() == "") {
+			alert("아이디를 입력하세요");
+			return false;
+		}
+		if ($("#password").val() == "") {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		return true;
+	}
+	
+	function out(){
+		location.href ="<c:url value='/logout.do'/>";
+	}
+	
+	/* pagination 페이지 링크 function */
+	function page(pageNo){
+	location.href = "<c:url value='/mainList.do'/>?pageIndex="+pageNo;
+	}
+	
+	function join(){
+		location.href = "<c:url value='/join.do'/>";
+	}
+	
+	function mypage(){
+		location.href = "<c:url value='/mypage.do'/>";
+	}
+</script>
+</head>
+<body>
+	<div class="container my-4">
+		<h2 class="mb-4 fw-bold text-center">메인화면</h2>
+		<div class="card mb-4">
+			<div class="card-header">
+				<c:if
+					test="${sessionScope.userId == null || sessionScope.userId == ''}">
+					<form class="row g-3 align-items-end" method="post"
+						action="/login.do">
+						<div class="col-md-3">
+							<label for="user_id" class="form-label">아이디</label> <input
+								type="text" class="form-control" id="user_id" name="user_id">
+						</div>
+						<div class="col-md-3">
+							<label for="password" class="form-label">Password</label> <input
+								type="password" class="form-control" id="password"
+								name="password">
+						</div>
+						<div class="col-md-3">
+							<button type="submit" class="btn btn-primary w-100"
+								onclick="return check();">로그인</button>
+						</div>
+						<div class="col-md-3">
+							<button type="button" class="btn btn-secondary w-100"
+								onclick="return join();">회원가입</button>
+						</div>
+					</form>
+				</c:if>
+				<c:if
+					test="${sessionScope.userId != null && sessionScope.userId != ''}">
+					<div class="d-flex justify-content-between align-items-center">
+						<div>
+							<strong>${sessionScope.userName}</strong>님 환영합니다
+						</div>
+						<div>
+							<button type="button" class="btn btn-primary me-2" onclick="mypage();">마이페이지</button>
+							<button type="button" class="btn btn-secondary" onclick="out();">로그아웃</button>
+						</div>
+					</div>
+				</c:if>
+			</div>
+			<div class="card-body">
+				<form class="row g-3 mb-4" method="post" action="/mainList.do">
+					<div class="col-md-6">
+						<label for="searchKeyword class="form-label">제목</label><input
+							type="text" class="form-control" id="searchKeyword"
+							name="searchKeyword">
+					</div>
+					<div class="col-md-6 d-flex align-items-end">
+						<button type="submit" class="btn btn-secondary">검색</button>
+					</div>
+				</form>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead class="table-light">
+							<tr>
+								<th>게시물번호</th>
+								<th>제목</th>
+								<th>조회수</th>
+								<th>댓글수</th>
+								<th>등록자</th>
+								<th>등록일</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="result" items="${resultList}" varStatus="status">
+								<tr>
+									<td><a href="javascript:view('${result.idx}');"><c:out
+												value="${result.idx}" /></a></td>
+									<td><a href="javascript:view('${result.idx}');"><c:out
+												value="${result.title}" /></a></td>
+									<td><c:out value="${result.count}" /></td>
+									<td><c:out value="${result.reply}" /></td>
+									<td><c:out value="${result.writerNm}" /></td>
+									<td><c:out value="${result.indate}" /></td>
+									<%-- <td><fmt:formatDate value="${result.indate}" pattern="yyyy-MM-dd hh:mm:ss" /></td> --%>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+				<!-- /List -->
+				<div id="paging">
+					<ui:pagination paginationInfo="${paginationInfo}" type="image"
+						jsFunction="page" />
+					<!-- <form:hidden path="pageIndex" /> -->
+				</div>
+			</div>
+			<div class="card-footer text-end">
+				<c:if test="${!empty sessionScope.userId }">
+					<button type="button" class="btn btn-secondary" onclick="add();">등록</button>
+				</c:if>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

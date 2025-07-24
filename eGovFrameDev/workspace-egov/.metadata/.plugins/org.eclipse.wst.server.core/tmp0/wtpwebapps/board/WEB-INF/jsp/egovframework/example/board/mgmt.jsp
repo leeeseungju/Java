@@ -5,17 +5,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bootstrap Example</title>
+<title>게시글 등록</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
-<link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
-<script src="/js/jquery.min.js"></script>
-<script src="/css/bootstrap/js/bootstrap.min.js"></script>
+<!-- Bootstrap CSS & JS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javaScript" language="javascript" defer="defer">
 	function cancel() {
 		location.href = "<c:url value='/mainList.do'/>";
@@ -66,10 +63,10 @@
 </head>
 <body>
 	<div class="container mt-4">
-		<h1>메인화면</h1>
-		<div class="card">
+		<h2 class="mb-4 fw-bold text-center">게시글 등록</h2>
+		<div class="card mb-4">
 			<div class="card-header">
-				<label>생각중:</label>
+				<label>게시글 등록</label>
 			</div>
 			<div class="card-body">
 				<form class="row g-3" id="boardRegForm" name="boardRegForm"
@@ -99,7 +96,7 @@
 								value="${boardVO.writerNm}" style="width: 40%;"> <input
 								type="text" class="form-control" id="indate" name="indate"
 								placeholder="등록일을입력하세요" maxLength="10"
-								style="width:40%;" value="${indate}" />
+								style="width:40%;" value="${strToday}" />
 						</div>
 					</div>
 					<div class="row mb-3">

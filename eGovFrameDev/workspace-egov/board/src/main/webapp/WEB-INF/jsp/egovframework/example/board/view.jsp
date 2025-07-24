@@ -11,14 +11,13 @@ pageContext.setAttribute("br", "<br/>"); //br태그
 <!DOCTYPE html>
 <html>
 <head>
-<title>Bootstrap Example</title>
+<title>상세화면</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!-- jQuery CDN -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-	rel="stylesheet">
+<!-- Bootstrap CSS & JS CDN -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script type="text/javaScript" language="javascript" defer="defer">
 	function list() {
@@ -90,7 +89,7 @@ pageContext.setAttribute("br", "<br/>"); //br태그
 					<div class="row mb-3">
 						<label class="col-sm-2 col-form-label">등록자/등록일:</label>
 						<div class="col-sm-10 d-flex align-items-center">
-							<div>${boardVO.writerNm}/${fn:substring(boardVO.indate, 0, fn:length(boardVO.indate) - 2)}
+							<div>${boardVO.writerNm}/${fn:substring(boardVO.indate, 0, 16)}
 							</div>
 						</div>
 					</div>
@@ -127,7 +126,7 @@ pageContext.setAttribute("br", "<br/>"); //br태그
 				</div>
 			</c:forEach>
 
-			<div class="mt-3 p-2 bg-light border rounded">작성자/작성일</div>
+			<div class="mt-3 p-2 bg-light border rounded">댓글 등록</div>
 
 			<div class="mt-3 p-4 bg-body-tertiary border rounded">
 				<form name="form2" method="post" action="">
@@ -154,7 +153,7 @@ pageContext.setAttribute("br", "<br/>"); //br태그
 					</div>
 
 					<div class="text-end">
-						<button type="submit" class="btn btn-primary" onclick="add();">작성</button>
+						<button type="submit" class="btn btn-primary" onclick="add();">등록</button>
 					</div>
 				</form>
 			</div>

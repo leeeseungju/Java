@@ -59,39 +59,37 @@
 		, B.USER_NAME as writerNm
 		FROM TBL_BOARD A
 		LEFT JOIN
-		TBL_USER B
-		ON A.WRITER = B.USER_ID
-		WHERE IDX=#{idx, jdbcType=VARCHAR}
+		TBL_USER B ON A.WRITER = B.USER_ID
+		WHERE A.IDX=#{idx, jdbcType=VARCHAR}
 	</select>
 
 
 	<select id="selectBoardList" parameterType="boardVO"
 		resultMap="board">
 		SELECT
-		A.IDX as idx
-		, A.TITLE as title
-		, A.CONTENTS as contents
-		,
-		IFNULL(A.COUNT,0) as count
-		, A.WRITER as writer
-		, A.INDATE as indate
-		,
-		B.USER_NAME as writerNm
-		, (SELECT COUNT(*) FROM TBL_REPLY X WHERE
-		X.IDX=A.IDX) AS reply
+		A.IDX as idx,
+		A.TITLE as title,
+		A.CONTENTS as contents,
+		IFNULL(A.COUNT,0) as count,
+		A.WRITER as writer,
+		A.INDATE as indate,
+		B.USER_NAME as writerNm,
+		(SELECT COUNT(*) FROM TBL_REPLY X WHERE X.IDX
+		= A.IDX) AS reply
 		FROM TBL_BOARD A
-		LEFT JOIN TBL_USER B
-		ON A.WRITER =
-		B.USER_ID
+		LEFT JOIN TBL_USER B ON A.WRITER = B.USER_ID
 		WHERE 1=1
 		<if test="searchKeyword != null and searchKeyword != ''">
-			AND ( A.TITLE LIKE CONCAT('%', #{searchKeyword}, '%'))
-			OR
-			A.CONTENTS LIKE CONCAT('%', #{searchKeyword}, '%')
+			AND (
+			A.TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+			OR A.CONTENTS LIKE
+			CONCAT('%', #{searchKeyword}, '%')
+			)
 		</if>
 		ORDER BY A.IDX DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
+
 
 
 	<select id="selectBoardListTotCnt" parameterType="boardVO"
@@ -101,10 +99,13 @@
 		FROM TBL_BOARD A
 		WHERE 1=1
 		<if test="searchKeyword != null and searchKeyword != ''">
-			AND ( A.TITLE LIKE CONCAT('%', #{searchKeyword}, '%'))
+			AND (
+			A.TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
 			OR
 			A.CONTENTS LIKE CONCAT('%', #{searchKeyword}, '%')
+			)
 		</if>
+
 	</select>
 
 	<select id="selectLoginCheck" parameterType="boardVO"
@@ -139,7 +140,7 @@
 		SELECT A.IDX as idx , A.SEQ as seq , A.REPLY as reply ,
 		A.WRITER as writer
 		, A.INDATE as indate FROM TBL_REPLY A WHERE 1=1 AND
-		IDX = #{idx} ORDER
+		A.IDX = #{idx} ORDER
 		BY
 		A.SEQ ASC
 	</select>
@@ -154,7 +155,8 @@
 		INSERT INTO tbl_user (
 		user_id, user_name, password, use_yn
 		) VALUES (
-		#{userId}, #{userName}, #{password}, #{useYn}
+		#{userId}, #{userName},
+		#{password}, #{useYn}
 		)
 	</insert>
 
@@ -164,8 +166,9 @@
 	</select>
 
 	<update id="updatePassword" parameterType="BoardVO">
-		UPDATE tbl_user 
-		SET password = #{password}
+		UPDATE tbl_user
+		SET
+		password = #{password}
 		WHERE user_id = #{userId}
 	</update>
 

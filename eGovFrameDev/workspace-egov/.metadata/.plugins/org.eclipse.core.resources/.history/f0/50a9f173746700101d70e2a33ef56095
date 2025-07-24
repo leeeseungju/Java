@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/bootstrap/css/bootstrap.min.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/css/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h1 class="mb-4">메인화면</h1>
+		<div class="card mb-4">
+			<div class="card-header">로그인</div>
+			<div class="card-body">테이블</div>
+			<div class="card-footer">하위메뉴</div>
+		</div>
+	</div>
+</html>

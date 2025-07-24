@@ -84,6 +84,7 @@ public class BoardController {
 //		if(request.getAttribute("idx") != null) {
 //		     boardVO = boardService.selectBoard(boardVO);
 		     model.addAttribute("boardVO", boardVO);
+		     model.addAttribute("strToday", strToday);
 //		}
 	
 	// 서버에서 가져온값을 화면에 맵핑

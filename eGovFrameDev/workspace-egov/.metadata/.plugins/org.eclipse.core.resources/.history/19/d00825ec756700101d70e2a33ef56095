@@ -1,0 +1,5 @@
+package egovframework.example.sample.board.web;
+
+public class BoardController {
+
+}
